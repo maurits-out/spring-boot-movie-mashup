@@ -7,6 +7,9 @@
     <groupId>nl.mout</groupId>
     <artifactId>spring-boot-movie-mashup</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>movie-recommender</module>
+    </modules>
     <packaging>pom</packaging>
 
     <parent>
