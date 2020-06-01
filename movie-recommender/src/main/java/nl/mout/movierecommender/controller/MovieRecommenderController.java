@@ -30,7 +30,7 @@ public final class MovieRecommenderController {
     }
 
 
-    @ResponseStatus(value = SERVICE_UNAVAILABLE, reason = "Oeps")
+    @ResponseStatus(value = SERVICE_UNAVAILABLE)
     @ExceptionHandler(TasteDiveException.class)
     public void tasteDiveExceptionHandler() {
     }
