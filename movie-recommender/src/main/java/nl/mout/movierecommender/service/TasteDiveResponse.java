@@ -5,20 +5,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class TasteDiveResponse {
+final class TasteDiveResponse {
 
     private final TasteDiveSimilar similar;
 
+    private final String error;
+
     @JsonCreator
-    public TasteDiveResponse(@JsonProperty("Similar") TasteDiveSimilar similar) {
+    public TasteDiveResponse(@JsonProperty("Similar") TasteDiveSimilar similar, @JsonProperty("error") String error) {
         this.similar = similar;
+        this.error = error;
     }
 
     public TasteDiveSimilar getSimilar() {
         return similar;
     }
 
-    static class TasteDiveSimilar {
+    public String getError() {
+        return error;
+    }
+
+    final static class TasteDiveSimilar {
 
         private final List<TasteDiveResult> results;
 
@@ -32,7 +39,7 @@ public class TasteDiveResponse {
         }
     }
 
-    static class TasteDiveResult {
+    final static class TasteDiveResult {
 
         private final String name;
 

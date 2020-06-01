@@ -1,3 +1,6 @@
 spring:
   main:
     banner-mode: "off"
+taste-dive:
+  base-url: "https://tastedive.com/api/similar"
+  api-key: "*"

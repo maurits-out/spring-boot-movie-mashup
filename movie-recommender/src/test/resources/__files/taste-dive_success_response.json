@@ -1,0 +1,32 @@
+{
+  "Similar": {
+    "Info": [
+      {
+        "Name": "Naked Gun",
+        "Type": "movie"
+      }
+    ],
+    "Results": [
+      {
+        "Name": "Picnic",
+        "Type": "movie"
+      },
+      {
+        "Name": "The Ghost And Mrs. Muir",
+        "Type": "movie"
+      },
+      {
+        "Name": "Friendly Persuasion",
+        "Type": "movie"
+      },
+      {
+        "Name": "All That Heaven Allows",
+        "Type": "movie"
+      },
+      {
+        "Name": "What's Up, Doc?",
+        "Type": "movie"
+      }
+    ]
+  }
+}
