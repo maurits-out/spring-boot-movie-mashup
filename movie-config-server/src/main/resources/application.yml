@@ -1,0 +1,12 @@
+server:
+  port: 8888
+spring:
+  main:
+    banner-mode: off
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:/home/maurits/IdeaProjects/spring-boot-movie-mashup/movie-config-server/config
