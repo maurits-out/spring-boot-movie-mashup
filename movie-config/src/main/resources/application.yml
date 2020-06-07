@@ -8,5 +8,4 @@ spring:
   cloud:
     config:
       server:
-        native:
-          searchLocations: file:/home/maurits/IdeaProjects/spring-boot-movie-mashup/movie-config-server/config
+        native.searchLocations: file:/home/maurits/IdeaProjects/spring-boot-movie-mashup/movie-config/config

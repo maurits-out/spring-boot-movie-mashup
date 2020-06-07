@@ -3,4 +3,4 @@ spring:
     banner-mode: "off"
 taste-dive:
   base-url: "https://tastedive.com/api/similar"
-  api-key: "*"
+  api-key: "{cipher}AQBQ4WAzRGuJ2xE5udddLRr8Ca6CFmg32oqcXHTRjxzlGp5+kej2TQIzhF3H6B/p+7OVugjbye/XDqmdAWs/JiMftBl+wIWKPcS+101jqDiOx53ms6j7wT05U2PzvtsA9X+WiX6U6ToHsndLLO+Y2H9GJ4uhhfA1D0hp7xTu1pZYslG6oQW0xYjsyLZKalfpoKbXxqqu/WGf8hpkm3jZf1vrK17wk/u69ZxqrybAt1UzG418djGe8B++tCcG2WoOK2EHhf/NHVFBTyL+UyhfmZMjVEtpRX7BJWsbaBEBZgDgTCpWbH3U419iYMjZNty3l+Al8w1StfxLitP0PQgmiqXzS8S/WmkHVKQnUEaRxT4/rg2LptkPFAWM3LBUX8zMh1Js4Zp0p0mglmDeJRRtHS9V"

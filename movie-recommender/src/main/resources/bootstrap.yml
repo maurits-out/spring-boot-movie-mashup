@@ -4,3 +4,8 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+encrypt:
+  keyStore:
+    location: file:///home/maurits/IdeaProjects/spring-boot-movie-mashup/keystores/movie-recommender.jks
+    password: test1234
+    alias: movie-recommender
