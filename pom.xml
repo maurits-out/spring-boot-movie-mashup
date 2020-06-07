@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>movie-recommender</module>
-        <module>movie-config-server</module>
+        <module>movie-config</module>
     </modules>
     <packaging>pom</packaging>
 
