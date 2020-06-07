@@ -10,6 +10,7 @@
     <modules>
         <module>movie-recommender</module>
         <module>movie-config</module>
+        <module>movie-rater</module>
     </modules>
     <packaging>pom</packaging>
 
