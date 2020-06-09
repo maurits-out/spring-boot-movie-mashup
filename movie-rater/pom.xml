@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>movie-rater</artifactId>
+    <name>Movie Rater</name>
 
     <dependencies>
         <dependency>
@@ -37,5 +38,13 @@
             <artifactId>wiremock</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
