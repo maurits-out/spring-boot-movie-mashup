@@ -28,7 +28,7 @@ public final class MovieRecommenderService {
     public Flux<String> findRecommendations(String movieName) {
         return webClient
                 .get()
-                .uri(uriBuilder -> uriBuilder
+                .uri(builder -> builder
                         .queryParam("q", movieName)
                         .queryParam("type", "movies")
                         .queryParam("limit", 5)
