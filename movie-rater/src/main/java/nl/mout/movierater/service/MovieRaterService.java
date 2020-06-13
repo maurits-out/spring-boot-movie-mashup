@@ -1,6 +1,7 @@
 package nl.mout.movierater.service;
 
 import nl.mout.movierater.service.OMDbResponse.OMDbRating;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -16,8 +17,9 @@ public final class MovieRaterService {
     private final WebClient webClient;
     private final String apiKey;
 
-    public MovieRaterService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://www.omdbapi.com/").build();
+    public MovieRaterService(WebClient.Builder webClientBuilder,
+                             @Value("${omdb.base-url}") String baseUrl) {
+        this.webClient = webClientBuilder.baseUrl(baseUrl).build();
         this.apiKey = "*";
     }
 
