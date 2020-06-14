@@ -2,3 +2,4 @@ server:
   port: 8081
 omdb:
   base-url: "http://www.omdbapi.com/"
+  api-key: "*"

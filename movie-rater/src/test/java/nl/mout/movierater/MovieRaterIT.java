@@ -32,6 +32,9 @@ public class MovieRaterIT {
     @Value("${omdb.base-url}")
     private URL omdbBaseUrl;
 
+    @Value("${omdb.api-key}")
+    private String omdbApiKey;
+
     @Autowired
     private WebTestClient webClient;
 
@@ -79,7 +82,7 @@ public class MovieRaterIT {
                         "t", equalTo("naked gun"),
                         "r", equalTo("json"),
                         "type", equalTo("movie"),
-                        "apikey", equalTo("*")))
+                        "apikey", equalTo(omdbApiKey)))
                 .willReturn(aResponse()
                         .withStatus(status.value())
                         .withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)

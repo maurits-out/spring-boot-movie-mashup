@@ -20,9 +20,10 @@ public final class MovieRaterService {
     private final String apiKey;
 
     public MovieRaterService(WebClient.Builder webClientBuilder,
-                             @Value("${omdb.base-url}") String baseUrl) {
+                             @Value("${omdb.base-url}") String baseUrl,
+                             @Value("${omdb.api-key}") String apiKey) {
         this.webClient = webClientBuilder.baseUrl(baseUrl).build();
-        this.apiKey = "*";
+        this.apiKey = apiKey;
     }
 
     public Mono<Integer> findRating(String movieName) {
