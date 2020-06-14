@@ -31,6 +31,6 @@ public class MovieRaterController {
 
     @ResponseStatus(value = SERVICE_UNAVAILABLE)
     @ExceptionHandler(OMDbInvalidApiKeyException.class)
-    public void tasteDiveExceptionHandler() {
+    public void omdbExceptionHandler() {
     }
 }
