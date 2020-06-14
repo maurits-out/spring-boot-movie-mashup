@@ -23,6 +23,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -58,8 +59,7 @@ public class MovieRecommenderIT {
 
         requestRecommendations()
                 .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$[*].name").isEqualTo(expectedRecommendations());
+                .expectBody().jsonPath("$[*].name").isEqualTo(expectedRecommendations());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class MovieRecommenderIT {
         stubTasteDive("taste-dive_invalid_api_key_response.json");
 
         requestRecommendations()
-                .expectStatus().value(Matchers.equalTo(HttpStatus.SERVICE_UNAVAILABLE.value()));
+                .expectStatus().isEqualTo(SERVICE_UNAVAILABLE);
     }
 
     private WebTestClient.ResponseSpec requestRecommendations() {

@@ -7,7 +7,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import static java.lang.Integer.valueOf;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static reactor.core.publisher.Flux.fromIterable;
+import static reactor.core.publisher.Mono.error;
 
 @Service
 public final class MovieRaterService {
@@ -33,6 +35,7 @@ public final class MovieRaterService {
                         .queryParam("apikey", apiKey)
                         .build())
                 .retrieve()
+                .onStatus(status -> status == UNAUTHORIZED, response -> error(new OMDbInvalidApiKeyException()))
                 .bodyToMono(OMDbResponse.class)
                 .flatMapMany(response -> fromIterable(response.getRatings()))
                 .filter(rating -> ROTTEN_TOMATOES_SOURCE.equals(rating.getSource()))

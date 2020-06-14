@@ -2,12 +2,13 @@ package nl.mout.movierater.controller;
 
 import nl.mout.movierater.api.APIRating;
 import nl.mout.movierater.service.MovieRaterService;
+import nl.mout.movierater.service.OMDbInvalidApiKeyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
+
+import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 
 @RestController
 public class MovieRaterController {
@@ -26,5 +27,10 @@ public class MovieRaterController {
         return service
                 .findRating(movieName)
                 .map(APIRating::of);
+    }
+
+    @ResponseStatus(value = SERVICE_UNAVAILABLE)
+    @ExceptionHandler(OMDbInvalidApiKeyException.class)
+    public void tasteDiveExceptionHandler() {
     }
 }

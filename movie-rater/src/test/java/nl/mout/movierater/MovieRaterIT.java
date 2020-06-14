@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -18,7 +19,7 @@ import java.util.Map;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -47,12 +48,19 @@ public class MovieRaterIT {
 
     @Test
     void testHappyFlow() {
-        stubOMDb("omdb_success_response.json");
+        stubOMDb("omdb_success_response.json", OK);
 
         requestRating()
                 .expectStatus().isOk()
-                .expectBody()
-                .jsonPath("$.rating").isEqualTo("87");
+                .expectBody().jsonPath("$.rating").isEqualTo("87");
+    }
+
+    @Test
+    void testInvalidApiKey() {
+        stubOMDb("omdb_invalid_api_key_response.json", UNAUTHORIZED);
+
+        requestRating()
+                .expectStatus().isEqualTo(SERVICE_UNAVAILABLE);
     }
 
     private WebTestClient.ResponseSpec requestRating() {
@@ -65,7 +73,7 @@ public class MovieRaterIT {
                 .exchange();
     }
 
-    private void stubOMDb(String omdbResponseFileName) {
+    private void stubOMDb(String omdbResponseFileName, HttpStatus status) {
         wireMockServer.stubFor(get(urlPathEqualTo("/"))
                 .withQueryParams(Map.of(
                         "t", equalTo("naked gun"),
@@ -73,7 +81,7 @@ public class MovieRaterIT {
                         "type", equalTo("movie"),
                         "apikey", equalTo("*")))
                 .willReturn(aResponse()
-                        .withStatus(OK.value())
+                        .withStatus(status.value())
                         .withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                         .withBodyFile(omdbResponseFileName)));
     }
