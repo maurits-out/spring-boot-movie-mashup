@@ -11,6 +11,7 @@
         <module>movie-recommender</module>
         <module>movie-config</module>
         <module>movie-rater</module>
+        <module>movie-mashup</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -29,7 +30,7 @@
         <java.version>14</java.version>
         <wiremock.version>2.26.3</wiremock.version>
         <spring-boot.version>2.3.1.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
     </properties>
 
     <build>
