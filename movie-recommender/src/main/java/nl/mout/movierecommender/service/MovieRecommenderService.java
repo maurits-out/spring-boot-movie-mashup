@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.util.List;
+
 import static reactor.core.publisher.Flux.fromIterable;
 
 @Service
@@ -16,7 +18,6 @@ public final class MovieRecommenderService {
 
     private final WebClient webClient;
     private final String apiKey;
-
 
     public MovieRecommenderService(WebClient.Builder webClientBuilder,
                                    @Value("${taste-dive.base-url}") String baseUrl,

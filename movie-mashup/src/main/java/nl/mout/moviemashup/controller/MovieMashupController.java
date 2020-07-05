@@ -1,6 +1,7 @@
 package nl.mout.moviemashup.controller;
 
-import nl.mout.moviemashup.api.APIMovieAndRating;
+import nl.mout.moviemashup.api.APIMovie;
+import nl.mout.moviemashup.service.MovieMashupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,15 @@ public class MovieMashupController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MovieMashupController.class);
 
+    private final MovieMashupService movieMashupService;
+
+    public MovieMashupController(MovieMashupService movieMashupService) {
+        this.movieMashupService = movieMashupService;
+    }
+
     @GetMapping("/top-recommendations")
-    public Flux<APIMovieAndRating> findTopRatedRecommendations(@RequestParam String movieName) {
+    public Flux<APIMovie> findTopRatedRecommendations(@RequestParam String movieName) {
         LOGGER.info("Finding top rated recommendations for {}", movieName);
-        return Flux.empty();
+        return movieMashupService.findTopRatedRecommendations(movieName).map(APIMovie::of);
     }
 }
