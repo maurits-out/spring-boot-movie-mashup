@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-public final class MovieRecommenderClient {
+public class MovieRecommenderClient {
 
     private final WebClient webClient;
 

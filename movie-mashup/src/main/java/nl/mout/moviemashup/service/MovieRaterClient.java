@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-public final class MovieRaterClient {
+public class MovieRaterClient {
 
     private final WebClient webClient;
 

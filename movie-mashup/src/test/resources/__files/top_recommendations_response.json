@@ -1,0 +1,22 @@
+[
+  {
+    "movieName": "The Bourne Legacy",
+    "rating": 70
+  },
+  {
+    "movieName": "Casino Royale",
+    "rating": 75
+  },
+  {
+    "movieName": "Mission: Impossible - Ghost Protocol",
+    "rating": 82
+  },
+  {
+    "movieName": "One Small Hitch",
+    "rating": 87
+  },
+  {
+    "movieName": "Zero Dark Thirty",
+    "rating": 65
+  }
+]
