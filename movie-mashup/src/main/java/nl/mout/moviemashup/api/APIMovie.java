@@ -17,6 +17,6 @@ public final class APIMovie {
     }
 
     public static APIMovie of(Movie movie) {
-        return new APIMovie(movie.getName(), null);
+        return new APIMovie(movie.getName(), movie.getRating());
     }
 }
