@@ -18,3 +18,9 @@ The application is composed into a number of micro services according the [Aggre
 The Movie Mashup service serves as the composite service. It is responsible for handling a request to retrieve a list of recommended movies together with their ratings. It will first make a call to the Movie Recommender. This servcies obtains a list of recommended movies buy invoking the API of TasteDive. Next for each movie returned the Movie Mashup calls the Movie Rater. The Movie Rater invokes the OMDb API to request the rating. Finally the Movie Mashup consolidates the recommended movies and ratings into a response to be returned to the caller of the Movie Mashup service..
 
 Besides these three micro services there is also the Movie Config service. This service stores the configuration data of each micro service.
+
+## Source code structure
+The source code is organized as a multi module Maven project where each service is a separate submodule.
+
+## Requirements
+To compile and run this application Java 14 and Maven 3.x are required.
