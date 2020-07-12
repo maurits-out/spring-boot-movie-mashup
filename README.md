@@ -9,9 +9,12 @@ Given the name of a movie this application looks up a set of recommended movies 
 And yes, this is one of the assignments of the [Python 3 Programming Specialization](https://www.coursera.org/specializations/python-3-programming) course on Coursera. It is a nice assignment to try out in Java and Spring.
 
 ## Decomposition
-The application consists of a number of micro services:
+The application is composed into a number of micro services according the [Aggregator Pattern](https://dzone.com/articles/design-patterns-for-microservices). These services are:
 
 - Movie Mashup
 - Movie Recommender
 - Movie Rater
-- Movie Config
+
+The Movie Mashup service serves as the composite service. It is responsible for handling a request to retrieve a list of recommended movies together with their ratings. It will first make a call to the Movie Recommender. This servcies obtains a list of recommended movies buy invoking the API of TasteDive. Next for each movie returned the Movie Mashup calls the Movie Rater. The Movie Rater invokes the OMDb API to request the rating. Finally the Movie Mashup consolidates the recommended movies and ratings into a response to be returned to the caller of the Movie Mashup service..
+
+Besides these three micro services there is also the Movie Config service. This service stores the configuration data of each micro service.
