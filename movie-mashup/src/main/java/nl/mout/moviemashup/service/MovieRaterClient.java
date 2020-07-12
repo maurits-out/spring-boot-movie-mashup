@@ -2,15 +2,18 @@ package nl.mout.moviemashup.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+@Component
 public class MovieRaterClient {
 
     private final WebClient webClient;
 
-    public MovieRaterClient(WebClient.Builder webClientBuilder, String ratingBaseUrl) {
-        webClient = webClientBuilder.baseUrl(ratingBaseUrl).build();
+    public MovieRaterClient(WebClient.Builder builder, @Value("${movie-rater-service.base-url}") String baseUrl) {
+        webClient = builder.baseUrl(baseUrl).build();
     }
 
     public Mono<Integer> findRating(String movieName) {
