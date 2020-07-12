@@ -67,7 +67,7 @@ To compile and run this application you need to have the following in place:
 
 - Java 14 or higher
 - Maven 3.6.3 or higher
-- A valid API key for TasteDive, which can be obtained from [here](https://tastedive.com/read/api)
-- A valid API key for OMDb API, which can be obtained from [here](http://www.omdbapi.com/apikey.aspx)
+- A valid API key for TasteDive, which can be obtained [here](https://tastedive.com/read/api)
+- A valid API key for OMDb API, which can be obtained [here](http://www.omdbapi.com/apikey.aspx)
 
 Set the `taste-dive.api-key` property in the `config/movie-recommender.yml` file of the Movie Config module to the key that you requested from TasteDive. Similar set the `omdb.api-key` property in the `config/movie-rater.yml` file of the same module to your OMDb API key.
