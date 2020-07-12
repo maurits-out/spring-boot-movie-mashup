@@ -1,7 +1,7 @@
 # Spring Boot Movie Mashup
 
 ## Introduction
-A Movie Mashup application that I use to play around with [Spring](https://spring.io/) related technologies. Spring is continuously relasing new technologies or updates existing ones, using this application I hope to keep up with the pace.
+A Movie Mashup application that I use to play around with [Spring](https://spring.io/) related technologies. Spring is continuously releasing new technologies or updates existing ones, using this application I hope to keep up with the pace.
 
 _This application will always be under construction._
 
