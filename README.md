@@ -3,7 +3,7 @@
 ## Introduction
 A Movie Mashup application that I use to play around with [Spring](https://spring.io/) related technologies. Spring is continuously releasing new technologies or updates existing ones, using this application I hope to keep up with the pace.
 
-_This application will always be under construction._
+As can be guessed this application is therefore always under construction.
 
 ## What does it do?
 Given the name of a movie this application looks up a set of recommended movies from [TasteDive](https://tastedive.com/). For each movie it then looks up the [Rotten Tomatoes](https://www.rottentomatoes.com/) rating from [OMDb API](http://www.omdbapi.com/).
