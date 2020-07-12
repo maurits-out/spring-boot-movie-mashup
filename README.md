@@ -10,7 +10,7 @@ Given the name of a movie this application looks up a set of recommended movies 
 
 And yes, this is one of the assignments of the [Python 3 Programming Specialization](https://www.coursera.org/specializations/python-3-programming) course on Coursera. It is a nice assignment to try out in Java and Spring.
 
-## Example
+### Example
 To obtain the rated recommendations for [Skyfall](https://www.imdb.com/title/tt1074638/) send the following HTTP GET request:
 
 ```
