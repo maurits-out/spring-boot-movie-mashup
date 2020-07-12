@@ -10,6 +10,44 @@ Given the name of a movie this application looks up a set of recommended movies 
 
 And yes, this is one of the assignments of the [Python 3 Programming Specialization](https://www.coursera.org/specializations/python-3-programming) course on Coursera. It is a nice assignment to try out in Java and Spring.
 
+## Example
+To obtain the rated recommendations for [Skyfall](https://www.imdb.com/title/tt1074638/) send the following HTTP GET request:
+
+```
+GET http://localhost:8082/top-recommendations?movieName=skyfall
+```
+
+This results in a response similar to:
+
+```
+HTTP/1.1 200 OK
+transfer-encoding: chunked
+Content-Type: application/json
+
+[
+    {
+        "movieName": "Casino Royale",
+        "rating": 95
+    },
+    {
+        "movieName": "The Bourne Legacy",
+        "rating": 56
+    },
+    {
+        "movieName": "Jack Reacher",
+        "rating": 63
+    },
+    {
+        "movieName": "Mission: Impossible - Ghost Protocol",
+        "rating": 93
+    },
+    {
+        "movieName": "Zero Dark Thirty",
+        "rating": 91
+    }
+]
+```
+
 ## Decomposition
 The application is composed into a number of micro services according the [Aggregator Pattern](https://dzone.com/articles/design-patterns-for-microservices). These services are:
 
