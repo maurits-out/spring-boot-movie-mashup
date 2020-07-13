@@ -49,7 +49,7 @@ Content-Type: application/json
 ```
 
 ## Decomposition
-The application is composed into a number of micro services according the [Aggregator Pattern](https://dzone.com/articles/design-patterns-for-microservices). These services are:
+The application has been composed into a number of micro services according the [Aggregator Pattern](https://dzone.com/articles/design-patterns-for-microservices). These services are:
 
 - Movie Mashup
 - Movie Recommender
@@ -57,17 +57,28 @@ The application is composed into a number of micro services according the [Aggre
 
 The Movie Mashup service serves as the composite service. It is responsible for handling a request to retrieve a list of recommended movies together with their ratings. It will first make a call to the Movie Recommender. This servcies obtains a list of recommended movies buy invoking the API of TasteDive. Next for each movie returned the Movie Mashup calls the Movie Rater. The Movie Rater invokes the OMDb API to request the rating. Finally the Movie Mashup consolidates the recommended movies and ratings into a response to be returned to the caller of the Movie Mashup service.
 
-Besides these three micro services there is also the Movie Config service. This service stores the configuration data of each micro service.
+Apart from these three micro services there is also the Movie Config service. This service stores the configuration data of each micro service.
 
 ## Source code structure
-The source code is organized as a multi module Maven project where each service is a separate submodule.
+The source code has been organized as a multi module Maven project where each service is a separate submodule.
 
 ## Running
 To compile and run this application you need to have the following in place:
 
 - Java 14 or higher
-- Maven 3.6.3 or higher
+- Maven 3.6.x or higher
 - A valid API key for TasteDive, which can be obtained [here](https://tastedive.com/read/api)
 - A valid API key for OMDb API, which can be obtained [here](http://www.omdbapi.com/apikey.aspx)
 
 Set the `taste-dive.api-key` property in the `config/movie-recommender.yml` file of the Movie Config module to the key that you requested from TasteDive. Similar set the `omdb.api-key` property in the `config/movie-rater.yml` file of the same module to your OMDb API key.
+
+To run the application first start `nl.mout.movieconfig.MovieConfigServer` in the Movie Config project. Then start in any order the remaining services:
+
+- `nl.mout.movierecommender.MovieRecommendApplication` in the Movie Recommender module.
+- `nl.mout.movierater.MovieRaterApplication` in the Movie Rater module.
+- `nl.mout.moviemashup.MovieMashupApplication` in the Movie Mashup module.
+
+## Spring technologies
+
+### Centralized configuration
+Each service obtains its configuration from the Movie Config service. This service uses [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config). The Movie Config service is configured to read the configuration from the local filesystem.
