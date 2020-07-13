@@ -74,11 +74,13 @@ Set the `taste-dive.api-key` property in the `config/movie-recommender.yml` file
 
 To run the application first start `nl.mout.movieconfig.MovieConfigServer` in the Movie Config project. Then start in any order the remaining services:
 
-- `nl.mout.movierecommender.MovieRecommendApplication` in the Movie Recommender module.
-- `nl.mout.movierater.MovieRaterApplication` in the Movie Rater module.
-- `nl.mout.moviemashup.MovieMashupApplication` in the Movie Mashup module.
+- `nl.mout.movierecommender.MovieRecommendApplication` in the Movie Recommender module
+- `nl.mout.movierater.MovieRaterApplication` in the Movie Rater module
+- `nl.mout.moviemashup.MovieMashupApplication` in the Movie Mashup module
 
 ## Spring technologies
 
 ### Centralized configuration
-Each service obtains its configuration from the Movie Config service. This service uses [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config). The Movie Config service is configured to read the configuration from the local filesystem.
+Each service obtains its configuration from the Movie Config service. This service uses [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config). The Movie Config service is configured to read the configuration from the local filesystem. The API keys for TasteDive and OMDb API are also configuration properties. We consider them secrets so we won't store them as plain text. Instead we use asymetric encryption using RSA. Both the Movie Recommender service as well as the Movie Rater service have their own key pair. The API key for TasteDive is encrypted using the public key of Movie Recommender. The encrypted representation is then included in the central 'movie-recommender.yml' configuration file of the Movie Config service. The same approach is followed for the API key of OMDb API.  It is encrypted using the public key of Movie Rater. The encrypted representation is included in the central 'movie-rater.yml' file.
+
+The Movie Config is configured in such a way that decryption of the API keys for Taste Dive and OMDb API key takes place in the Movie Recommender service and the Movie Rater service respectively. The default is to do the decryption in the Movie Config service, however this has the disadvantage that it needs to have access to the private keys of these two services, which is not preferred.
