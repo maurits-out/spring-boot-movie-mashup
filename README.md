@@ -81,4 +81,11 @@ To run the application first start `nl.mout.movieconfig.MovieConfigServer` in th
 ## Spring technologies
 
 ### Centralized configuration
-Each service obtains its configuration from the Movie Config service. This service uses [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config). The Movie Config service is configured to read the configuration from the local filesystem.
+Each service obtains its configuration from the Movie Config service. This service uses [Spring Cloud Config](https://cloud.spring.io/spring-cloud-config). The Movie Config service has been configured to read the configuration from the local filesystem.
+
+### Logging correlation and integration with Zipkin
+In order to trace all logging of a single call to the Movie Mashup service a common practise is to use correlation IDs. The [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth) provides this out of the box. Simply adding the dependency `spring-cloud-starter-sleuth` does the job for you. Nice. However, by including `spring-cloud-starter-zipkin` instead we have automatically integration with [Zipkin](https://zipkin.io/) (a distributed tracing tool). Running Zipkin is a no-brainer:
+
+```bash
+podman run -d -p 9411:9411 openzipkin/zipkin
+```  

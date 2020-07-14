@@ -3,6 +3,9 @@ spring:
     name: movie-rater
   main:
     banner-mode: "off"
+  output:
+    ansi:
+      enabled: ALWAYS
   cloud:
     config:
       uri: http://localhost:8888
