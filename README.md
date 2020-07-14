@@ -96,4 +96,8 @@ In order to trace all logging of a single call to the Movie Mashup service a com
 
 ```bash
 podman run -d -p 9411:9411 openzipkin/zipkin
-```  
+```
+
+Make sure you publish port 9411 because Spring Cloud Zipkin assumes by default Zipkin is available on localhost:9411.
+
+Once running you can access the web interface of Zipkin in your browser using http://localhost:9411/zipkin. 
