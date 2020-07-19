@@ -12,6 +12,7 @@
         <module>movie-config</module>
         <module>movie-rater</module>
         <module>movie-mashup</module>
+        <module>movie-eureka</module>
     </modules>
     <packaging>pom</packaging>
 

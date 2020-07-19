@@ -1,5 +1,14 @@
 server:
   port: 8081
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 omdb:
   base-url: "http://www.omdbapi.com/"
   api-key: "{cipher}AQBSzK/QJwbRxR9VfwCvW2p4QlHwLnrGaokuDajQBVkyfH+4SsOgVouy9Tj+gLOeFetF4b9kNglldOKdz3C4pHzqBvKQ7mqt5iaVTa//v7/yPs5nZDuS2Yg8inEnX5HAR6aVY7j3de5GHfrC0ckTvG/Q4hFvDZJOdsSibGk9EremNhBi5p1ugwjN4ZPXUCKd8J/Lf9lzv5VJeXiqzYOWwThYYoJ/rpMTLWtus2klXHQr8ljH7YP4Sd5nJh1mJAmBGd1WN1ikY7kpnsH5FoOa4KkV1wVDdMs1KJ7ifNC14V4M8DERxUIARfo+rgS1RwWXay4Es5w9Dm2TiyNwF7Pk+I/61x0fkZkf7opIXlMUmQJ7nQK3Dc4qgBIso7dbv9YP5aQ="
