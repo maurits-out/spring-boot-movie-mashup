@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -23,6 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.util.StreamUtils.copyToString;
 import static reactor.core.publisher.Flux.just;
 
+@Import(MovieMashupTestConfiguration.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
 public class MovieMashupIT {

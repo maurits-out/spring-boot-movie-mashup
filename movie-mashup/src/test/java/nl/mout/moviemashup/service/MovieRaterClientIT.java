@@ -1,14 +1,19 @@
 package nl.mout.moviemashup.service;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import nl.mout.moviemashup.MovieMashupTestConfiguration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -18,6 +23,7 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Import(MovieMashupTestConfiguration.class)
 @SpringBootTest(webEnvironment = NONE)
 @TestPropertySource(locations = "classpath:application-test.properties")
 @ExtendWith({SpringExtension.class})
