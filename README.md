@@ -8,7 +8,7 @@ As can be guessed this application is therefore always under construction.
 ## What does it do?
 Given the name of a movie this application looks up a set of recommended movies from [TasteDive](https://tastedive.com/). For each movie it then looks up the [Rotten Tomatoes](https://www.rottentomatoes.com/) rating from [OMDb API](http://www.omdbapi.com/).
 
-And yes, this is one of the assignments of the [Python 3 Programming Specialization](https://www.coursera.org/specializations/python-3-programming) course on Coursera. It is a nice assignment to try out in Java and Spring.
+By the way, this is a shameless rip-off of one of the assignments of the [Python 3 Programming Specialization](https://www.coursera.org/specializations/python-3-programming) course on Coursera. It is a nice assignment to try out in Java and Spring.
 
 ### Example
 To obtain the rated recommendations for [Skyfall](https://www.imdb.com/title/tt1074638/) send the following HTTP GET request:
@@ -55,9 +55,14 @@ The application has been composed into a number of micro services according the 
 - Movie Recommender
 - Movie Rater
 
-The Movie Mashup service serves as the composite service. It is responsible for handling a request to retrieve a list of recommended movies together with their ratings. It will first make a call to the Movie Recommender. This servcies obtains a list of recommended movies buy invoking the API of TasteDive. Next for each movie returned the Movie Mashup calls the Movie Rater. The Movie Rater invokes the OMDb API to request the rating. Finally the Movie Mashup consolidates the recommended movies and ratings into a response to be returned to the caller of the Movie Mashup service.
+The Movie Mashup service serves as the composite service. It is responsible for handling a request to retrieve a list of recommended movies together with their ratings. It will first make a call to the Movie Recommender. This service obtains a list of recommended movies by invoking the API of TasteDive. Next for each movie returned the Movie Mashup calls the Movie Rater. The Movie Rater invokes the OMDb API to request the rating. Finally the Movie Mashup consolidates the recommended movies and ratings into a response to be returned to the caller of the Movie Mashup service.
 
-Apart from these three micro services there is also the Movie Config service. This service stores the configuration data of each micro service.
+Apart from these three micro services there are also some special services:
+ 
+- Movie Config service
+- Movie Eureka service
+
+The Movie Config service centralizes the configuration of each micro service. The Movie Eureka service provides a service registry to support service discovery.
 
 ## Source code structure
 The source code has been organized as a multi module Maven project where each service is a separate submodule.
@@ -70,9 +75,9 @@ To compile and run this application you need to have the following in place:
 - A valid API key for TasteDive, which can be obtained [here](https://tastedive.com/read/api)
 - A valid API key for OMDb API, which can be obtained [here](http://www.omdbapi.com/apikey.aspx)
 
-Set the `taste-dive.api-key` property in the `config/movie-recommender.yml` file of the Movie Config module to the key that you requested from TasteDive. Similar set the `omdb.api-key` property in the `config/movie-rater.yml` file of the same module to your OMDb API key.
+Set the `taste-dive.api-key` property in the `config/movie-recommender.yml` file of the Movie Config module to the key you requested from TasteDive. Similar set the `omdb.api-key` property in the `config/movie-rater.yml` file of the same module to your OMDb API key.
 
-To run the application first start `nl.mout.movieconfig.MovieConfigServer` in the Movie Config project. Then start in any order the remaining services:
+To run the application first start `nl.mout.movieconfig.MovieConfigServer` in the Movie Config project followed by `nl.mout.movieeureka.MovieEurekaRegistryApplication` in the Movie Eureka Registry project. Then start in any order the remaining services:
 
 - `nl.mout.movierecommender.MovieRecommendApplication` in the Movie Recommender module
 - `nl.mout.movierater.MovieRaterApplication` in the Movie Rater module
@@ -100,4 +105,8 @@ podman run -d -p 9411:9411 openzipkin/zipkin
 
 Make sure you publish port 9411 because Spring Cloud Zipkin assumes by default Zipkin is available on localhost:9411.
 
-Once running you can access the web interface of Zipkin in your browser using http://localhost:9411/zipkin. 
+Once running you can access the web interface of Zipkin in your browser using http://localhost:9411/zipkin.
+
+### Service registration and discovery
+The Movie Eureka service provides a service registry based on [Netflix Eureka](https://github.com/Netflix/eureka). Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This can be achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` dependency.
+ 
