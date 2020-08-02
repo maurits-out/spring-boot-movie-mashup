@@ -108,5 +108,15 @@ Make sure you publish port 9411 because Spring Cloud Zipkin assumes by default Z
 Once running you can access the web interface of Zipkin in your browser using http://localhost:9411/zipkin.
 
 ### Service registration and discovery
-To use service registration and discovery first the Movie Eureka service must be started. This service provides a registry based on [Netflix Eureka](https://github.com/Netflix/eureka). Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This is achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` as a dependency to both modules. When inspecting the [dashboard](http://localhost:8761)  of the Movie Eureka service both the Movie Recommender and Movie Rater service should be visible under the section _Instances currently registered with Eureka_.
+To use service registration and discovery first the Movie Eureka service must be started. This service provides a registry based on [Netflix Eureka](https://github.com/Netflix/eureka).
+
+#### Registration
+Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This is achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` as a dependency to both modules. When inspecting the [dashboard](http://localhost:8761)  of the Movie Eureka service both the Movie Recommender and Movie Rater service should be visible under the section _Instances currently registered with Eureka_. These services have the application name set to MOVIE-RECOMMENDER and MOVIE-RATER respectively (this can be controlled using the spring.application.name property of each service).
+
+#### Discovery
+Next we want the Movie Mashup service to obtain the URLs of the Movie Recommender and the Movie Rater services from the registry. To do so we need to do the following.
+1. Add `spring-cloud-starter-netflix-eureka-client` as a dependency to the Movie Mashup module.
+2. Add the `eureka.client.serviceUrl` property in `movie-mashup.yml` to contain the URL of the Movie Eureka service (http://localhost:8761/eureka/).
+3. Change the `movie-recommender-service.base-url` and `movie-rater-service.base-url` properties in the same file by replacing the part in the URL containing the server name and port number with the application name (MOVIE-RECOMMENDER and MOVIE-RATER, see above).
+
  
