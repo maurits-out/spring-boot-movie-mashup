@@ -111,14 +111,14 @@ Once running you can access the web interface of Zipkin in your browser using ht
 To use service registration and discovery first the Movie Eureka service must be started. This service provides a registry based on [Netflix Eureka](https://github.com/Netflix/eureka).
 
 #### Registration
-Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This is achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` as a dependency to both modules. When inspecting the [dashboard](http://localhost:8761)  of the Movie Eureka service both the Movie Recommender and Movie Rater service should be visible under the section _Instances currently registered with Eureka_. These services have the application name set to **MOVIE-RECOMMENDER** and **MOVIE-RATER** respectively. This can be controlled using the spring.application.name property of each service. These names serve as identifiers when setting up service discover (see below).
+Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This is achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` as a dependency to both modules. When inspecting the [dashboard](http://localhost:8761) of the Movie Eureka service both the Movie Recommender and Movie Rater service should be visible under the section _Instances currently registered with Eureka_. These services have the application name set to **MOVIE-RECOMMENDER** and **MOVIE-RATER** respectively. This can be controlled using the spring.application.name property of each service. These names serve as identifiers when setting up service discover (see below).
 
 #### Discovery
 Next we want the Movie Mashup service to obtain the URLs of the Movie Recommender and the Movie Rater services from the registry. To do so we need to do the following.
 1. Add `spring-cloud-starter-netflix-eureka-client` as a dependency to the Movie Mashup module.
 2. Add the `eureka.client.serviceUrl` property in `movie-mashup.yml` to contain the URL of the Movie Eureka service (http://localhost:8761/eureka/).
 3. Change the `movie-recommender-service.base-url` and `movie-rater-service.base-url` properties in the same file by replacing the part in the URL containing the server name and port number with the application name (MOVIE-RECOMMENDER and MOVIE-RATER, see above).
-4. Finally we need to define our own WebClient.Builder Spring bean and annotate it with `org.springframework.cloud.client.loadbalancer.LoadBalanced`:
+4. For the final step, we need to define our own WebClient.Builder Spring bean and annotate it with `org.springframework.cloud.client.loadbalancer.LoadBalanced`:
 
         @Bean
         @LoadBalanced
@@ -127,3 +127,21 @@ Next we want the Movie Mashup service to obtain the URLs of the Movie Recommende
         }
 
  
+#### RibbonLoadBalancerClient
+While starting one of the services I noticed the following warning in the logging:
+
+```
+You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+```
+
+I fixed this by following the suggestion: setting the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` in the configuration of every component.
+
+#### Dynamic configuration sources
+I also noticed the following warning in the logging:
+
+```
+No URLs will be polled as dynamic configuration sources.
+To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+```
+
+I fixed this by creating an empty config.properties file in each component.

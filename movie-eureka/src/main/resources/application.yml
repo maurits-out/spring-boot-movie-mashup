@@ -1,4 +1,9 @@
-spring.application.name: movie-registry-service
+spring:
+  application:
+    name: movie-registry-service
+  main:
+    banner-mode: "off"
+
 server.port: 8761
 
 eureka:
