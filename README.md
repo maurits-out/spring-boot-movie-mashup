@@ -108,5 +108,5 @@ Make sure you publish port 9411 because Spring Cloud Zipkin assumes by default Z
 Once running you can access the web interface of Zipkin in your browser using http://localhost:9411/zipkin.
 
 ### Service registration and discovery
-The Movie Eureka service provides a service registry based on [Netflix Eureka](https://github.com/Netflix/eureka). Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This can be achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` dependency.
+To use service registration and discovery first the Movie Eureka service must be started. This service provides a registry based on [Netflix Eureka](https://github.com/Netflix/eureka). Both the Movie Recommender and the Movie Rater service will automatically register themselves during start-up. This is achieved simply by adding the `spring-cloud-starter-netflix-eureka-client` as a dependency to both modules. When inspecting the [dashboard](http://localhost:8761)  of the Movie Eureka service both the Movie Recommender and Movie Rater service should be visible under the section _Instances currently registered with Eureka_.
  
