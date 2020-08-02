@@ -144,4 +144,4 @@ No URLs will be polled as dynamic configuration sources.
 To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
 ```
 
-I fixed this by creating an empty config.properties file in each component.
+I fixed this by creating an empty `config.properties` file in each service.
