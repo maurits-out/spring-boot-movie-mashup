@@ -118,5 +118,12 @@ Next we want the Movie Mashup service to obtain the URLs of the Movie Recommende
 1. Add `spring-cloud-starter-netflix-eureka-client` as a dependency to the Movie Mashup module.
 2. Add the `eureka.client.serviceUrl` property in `movie-mashup.yml` to contain the URL of the Movie Eureka service (http://localhost:8761/eureka/).
 3. Change the `movie-recommender-service.base-url` and `movie-rater-service.base-url` properties in the same file by replacing the part in the URL containing the server name and port number with the application name (MOVIE-RECOMMENDER and MOVIE-RATER, see above).
+4. Finally we need to define our own WebClient.Builder Spring bean and annotate it with `org.springframework.cloud.client.loadbalancer.LoadBalanced`:
+
+        @Bean
+        @LoadBalanced
+        public WebClient.Builder loadBalancedWebClientBuilder() {
+            return WebClient.builder();
+        }
 
  
