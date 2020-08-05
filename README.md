@@ -168,7 +168,7 @@ Each route must have an ID, in this case the ID is `movie-mashup-route`. The `ur
 
 One thing to improve here is of course the hard-coded location `http://localhost:8082` of the Movie Mashup service. It would be better if the gateway obtains this from the Eureka service registry. No problem. To do so we add the `spring-cloud-starter-netflix-eureka-client` dependency, annotate `nl.mout.moviegateway.MovieGatewayApplication` with `@EnableEurekaClient` and update the configuration as follows:
 
-```
+```yml
 eureka:
   client:
     register-with-eureka: false
