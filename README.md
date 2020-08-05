@@ -149,7 +149,7 @@ To enable URLs as dynamic configuration sources, define System property archaius
 I suppressed this warning by creating an empty `config.properties` file in each service.
 
 ### API Gateway
-The Spring Cloud Gateway project can be used to create an API Gateway. To so so the Movie Gateway module is introduced with `spring-cloud-starter-gateway` as a dependency. The Movie Gateway service will be running on port 9000. We want every request to the gateway with URL `http://localhost:9000/movie-mashup?movieName=...` to be send to the Movie Mashup service. This can be done by adding the following route configuration fragment to movie-gateway.yml:
+The Spring Cloud Gateway project can be used to create an API Gateway. To so so the Movie Gateway module is introduced with `spring-cloud-starter-gateway` as a dependency. The Movie Gateway service will be running on port 9000. We want every request to the gateway with URL `http://localhost:9000/movie-mashup?movieName=...` to be send to the Movie Mashup service. This can be done by adding the following route configuration fragment to `movie-gateway.yml`:
 
 ```yml
 spring:
@@ -165,3 +165,30 @@ spring:
 ```
 
 Each route must have an ID, in this case the ID is `movie-mashup-route`. The `uri` attribute specifies the location of the Movie Mashup service. In the `predicates` section we specify that any request to the gateway with path `/movie-mashup` will be selected for this route to be forwarded to the Movie Mashup service. In the `filters` section we configure a filter that rewrites the path of `/movie-mashup` to `top-recommendations`, which is what the Movie Mashup services expects.
+
+One thing to improve here is of course the hard-coded location `http://localhost:8082` of the Movie Mashup service. It would be better if the gateway obtains this from the Eureka service registry. No problem. To do so we add the `spring-cloud-starter-netflix-eureka-client` dependency, annotate `nl.mout.moviegateway.MovieGatewayApplication` with `@EnableEurekaClient` and update the configuration as follows:
+
+```
+eureka:
+  client:
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    gateway:
+      routes:
+        - id: movie-mashup-route
+          uri: lb://MOVIE-MASHUP
+          predicates:
+            - Path=/movie-mashup
+          filters:
+            - RewritePath=/movie-mashup, /top-recommendations      
+```
+
+In the first part we specify the URL of the Movie Eureka service whicch is not that interesting. What is, is the uri property. By setting it to `lb://MOVIE-MASHUP` we enable client-side load balancing where the URL is obtained from Movie Eureka service using the application ID of the Movie Mashup service, i.e. **MOVIE-MASHUP**.
+
+
