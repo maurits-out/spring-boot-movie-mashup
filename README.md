@@ -61,8 +61,9 @@ Apart from these three micro services there are also some special services:
  
 - Movie Config service
 - Movie Eureka service
+- Movie Gateway service
 
-The Movie Config service centralizes the configuration of each micro service. The Movie Eureka service provides a service registry to support service discovery.
+The Movie Config service centralizes the configuration of each micro service. The Movie Eureka service provides a service registry to support service discovery. The Movie Gateway service provides an API gateway that will expose an endpoint for calling the Movie Mashup service.
 
 ## Source code structure
 The source code has been organized as a multi module Maven project where each service is a separate submodule.
@@ -82,6 +83,7 @@ To run the application first start `nl.mout.movieconfig.MovieConfigServer` in th
 - `nl.mout.movierecommender.MovieRecommendApplication` in the Movie Recommender module
 - `nl.mout.movierater.MovieRaterApplication` in the Movie Rater module
 - `nl.mout.moviemashup.MovieMashupApplication` in the Movie Mashup module
+- `nl.mout.moviegateway.MovieGatewayApplication` in the Movie Gateway module 
 
 ## Spring technologies
 
@@ -134,7 +136,7 @@ While starting one of the services I noticed the following warning in the loggin
 You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
 ```
 
-I fixed this by following the suggestion: setting the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` in the configuration of every component.
+I suppressed this warning by following the suggestion: setting the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` in the configuration of every component.
 
 #### Dynamic configuration sources
 I also noticed the following warning in the logging:
@@ -144,4 +146,22 @@ No URLs will be polled as dynamic configuration sources.
 To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
 ```
 
-I fixed this by creating an empty `config.properties` file in each service.
+I suppressed this warning by creating an empty `config.properties` file in each service.
+
+### API Gateway
+The Spring Cloud Gateway project can be used to create an API Gateway. To so so the Movie Gateway module is introduced with `spring-cloud-starter-gateway` as a dependency. The Movie Gateway service will be running on port 9000. We want every request to the gateway with URL `http://localhost:9000/movie-mashup?movieName=...` to be send to the Movie Mashup service. This can be done by adding the following route configuration fragment to movie-gateway.yml:
+
+```yml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: movie-mashup-route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/movie-mashup
+          filters:
+            - RewritePath=/movie-mashup, /top-recommendations
+```
+
+Each route must have an ID, in this case the ID is `movie-mashup-route`. The `uri` attribute specifies the location of the Movie Mashup service. In the `predicates` section we specify that any request to the gateway with path `/movie-mashup` will be selected for this route to be forwarded to the Movie Mashup service. In the `filters` section we configure a filter that rewrites the path of `/movie-mashup` to `top-recommendations`, which is what the Movie Mashup services expects.
