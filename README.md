@@ -189,6 +189,4 @@ spring:
             - RewritePath=/movie-mashup, /top-recommendations      
 ```
 
-In the first part we specify the URL of the Movie Eureka service whicch is not that interesting. What is, is the uri property. By setting it to `lb://MOVIE-MASHUP` we enable client-side load balancing where the URL is obtained from Movie Eureka service using the application ID of the Movie Mashup service, i.e. **MOVIE-MASHUP**.
-
-
+In the first part we specify the URL of the Movie Eureka service which is not that interesting. What is, is the uri property. By setting it to `lb://MOVIE-MASHUP` we enable client-side load balancing where the URL is obtained from Movie Eureka service using the application ID of the Movie Mashup service, i.e. **MOVIE-MASHUP**.
