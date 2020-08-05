@@ -175,10 +175,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 spring:
-  cloud:
-    loadbalancer:
-      ribbon:
-        enabled: false
     gateway:
       routes:
         - id: movie-mashup-route
