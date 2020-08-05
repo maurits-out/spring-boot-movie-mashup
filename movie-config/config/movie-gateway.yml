@@ -1,2 +1,17 @@
 server:
   port: 9000
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: movie-mashup-route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/movie-mashup
+          filters:
+            - RewritePath=/movie-mashup, /top-recommendations
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
